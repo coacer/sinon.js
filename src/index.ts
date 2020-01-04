@@ -10,10 +10,10 @@ export class Item {
 
 export class Order {
   private items: Item[] = [];
-  private payment: number;
-  private paymentAt: Date = null;
+  private payment: number = 0;
+  private paymentAt: Date = new Date();
 
-  add(item: Item) {
+  add(item: Item): void {
     this.items.push(item);
   }
 
@@ -24,7 +24,7 @@ export class Order {
     );
   }
 
-  pay(paymentAt: Date, discountRate: number = 0) {
+  pay(paymentAt: Date, discountRate: number = 0): void {
     this.payment = this.calculateDiscount(discountRate);
     this.paymentAt = paymentAt;
   }
@@ -42,11 +42,11 @@ export class Order {
   }
 }
 
-const order = new Order();
-
-order.add(new Item(100)); // 100円の商品を追加
-order.add(new Item(200)); // 200円の商品を追加
-
-order.pay(new Date(), 50); // 支払い（50%引き）
-const receipt = order.receipt(); // '2018/04 150円' というレシートを出力
-console.log(receipt);
+// const order = new Order();
+//
+// order.add(new Item(100)); // 100円の商品を追加
+// order.add(new Item(200)); // 200円の商品を追加
+//
+// order.pay(new Date(), 50); // 支払い（50%引き）
+// const receipt = order.receipt(); // '2018/04 150円' というレシートを出力
+// console.log(receipt);
