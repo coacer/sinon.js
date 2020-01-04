@@ -41,4 +41,22 @@ describe('Order', () => {
     // 本物の場合と異なる結果となる
     expect(order.getPayment()).toBe(120);
   });
+
+  // モックはスタブとは全く別物で、どのような振る舞いをするかをあらかじめ期待して、その通りに動作しなかった場合に検証を失敗させる(スパイとは異なり、期待する動作を実行前に書く)
+  it('mock', () => {
+    const item = new Item();
+    const mock = sinon.mock(item);
+    mock.expects('calculateDiscount')
+      .twice()
+      .withArgs(10)
+      .returns(90);
+
+    const order = new Order();
+    order.add(item);
+    order.add(item);
+    order.pay(new Date(), 10);
+
+    mock.verify();
+    expect(order.getPayment()).toBe(180);
+  });
 });
